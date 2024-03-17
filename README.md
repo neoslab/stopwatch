@@ -1,4 +1,4 @@
-# StopWatch
+## StopWatch
 
 This Python stopwatch application offers basic functionality with three main functions: start, stop, and reset. It provides a simple yet effective way to measure elapsed time for various tasks or activities.
 
