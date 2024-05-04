@@ -17,7 +17,7 @@ This stopwatch can be easily integrated into Python projects requiring time trac
 #### Build the executable
 
 ```shell
-git clone https://github.com/ghostreaver/stopwatch
+git clone https://github.com/neoslab/stopwatch
 cd stopwatch
 python3 -m pip install -r requirement.txt
 python3 builder.py -o "stopwatch"
