@@ -1,10 +1,16 @@
-#!/usr/bin/env python3
-# coding: utf-8
+""" coding: utf-8 """
 
 # Import libraries
+from PyQt6.QtCore import Qt
+from PyQt6.QtCore import QTimer
+from PyQt6.QtWidgets import QApplication
+from PyQt6.QtWidgets import QHBoxLayout
+from PyQt6.QtWidgets import QLabel
+from PyQt6.QtWidgets import QPushButton
+from PyQt6.QtWidgets import QSizePolicy
+from PyQt6.QtWidgets import QVBoxLayout
+from PyQt6.QtWidgets import QWidget
 import sys
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QSizePolicy
-from PyQt6.QtCore import QTimer, Qt
 
 
 # Class StopWatch
@@ -16,12 +22,20 @@ class StopWatch(QWidget):
     def __init__(self):
         """ Class initialization """
         super().__init__()
-        self.displaylabel = QLabel("00:00:00.00")
-        self.startbutton = QPushButton("Start")
-        self.stopbutton = QPushButton("Stop")
-        self.resetbutton = QPushButton("Reset")
+        self.displaylabel = QLabel("00:00:00:00")
+        self.displaylabel.setStyleSheet("font-size:20px;font-weight:bold;")
+        self.btn_start = QPushButton("Start")
+        self.btn_start.setFixedSize(100, 35)
+        self.btn_start.setStyleSheet("font-size:13px;border:1px solid #787878;")
+        self.btn_stop = QPushButton("Stop")
+        self.btn_stop.setFixedSize(100, 35)
+        self.btn_stop.setStyleSheet("font-size:13px;border:1px solid #787878;")
+        self.btn_reset = QPushButton("Reset")
+        self.btn_reset.setFixedSize(100, 35)
+        self.btn_reset.setStyleSheet("font-size:13px;border:1px solid #787878;")
         self.timer = QTimer()
         self.elapsed_time = 0
+        self.running = False
         self.gui()
 
     # @name: gui()
@@ -37,12 +51,12 @@ class StopWatch(QWidget):
         self.displaylabel.setStyleSheet("font-size: 24px")  # Increase font size
         layout.addWidget(self.displaylabel)
         handlerlayout = QHBoxLayout()
-        self.startbutton.clicked.connect(self.start)
-        handlerlayout.addWidget(self.startbutton)
-        self.stopbutton.clicked.connect(self.stop)
-        handlerlayout.addWidget(self.stopbutton)
-        self.resetbutton.clicked.connect(self.reset)
-        handlerlayout.addWidget(self.resetbutton)
+        self.btn_start.clicked.connect(self.start)
+        handlerlayout.addWidget(self.btn_start)
+        self.btn_stop.clicked.connect(self.stop)
+        handlerlayout.addWidget(self.btn_stop)
+        self.btn_reset.clicked.connect(self.reset)
+        handlerlayout.addWidget(self.btn_reset)
         layout.addLayout(handlerlayout)
         self.setLayout(layout)
         self.timer.timeout.connect(self.update)
@@ -52,7 +66,9 @@ class StopWatch(QWidget):
     # @return: void
     def start(self):
         """ Start the stopwatch """
-        self.timer.start(10)
+        if not self.running:
+            self.timer.start(1)
+            self.running = True
 
     # @name: stop()
     # @description: Stop the stopwatch
@@ -60,6 +76,7 @@ class StopWatch(QWidget):
     def stop(self):
         """ Stop the stopwatch """
         self.timer.stop()
+        self.running = False
 
     # @name: reset()
     # @description: Reset the stopwatch
@@ -68,6 +85,7 @@ class StopWatch(QWidget):
         """ Reset the stopwatch """
         self.timer.stop()
         self.elapsed_time = 0
+        self.running = False
         self.refresh()
 
     # @name: update()
@@ -86,7 +104,8 @@ class StopWatch(QWidget):
         milliseconds = self.elapsed_time % 1000
         seconds = (self.elapsed_time // 1000) % 60
         minutes = (self.elapsed_time // 60000) % 60
-        self.displaylabel.setText(f"{minutes:02d}:{seconds:02d}:{milliseconds//10:02d}.{milliseconds%100:02d}")
+        hours = self.elapsed_time // 3600000
+        self.displaylabel.setText(f"{hours:02d}:{minutes:02d}:{seconds:02d}:{milliseconds//10:02d}")
 
 
 # Main function

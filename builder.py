@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-# coding: utf-8
+""" coding: utf-8 """
 
 # Import libraries
 import os
@@ -54,7 +53,10 @@ class Builder(object):
         shutil.move(buildfile, self.execname + '.py')
 
         # Create the executable using PyInstaller
-        os.system('pyinstaller --noconsole --onefile ' + self.execname + '.py')
+        exefile = self.execname + '.py'
+        upxpath = '/usr/bin/upx'
+
+        os.system('pyinstaller --noconsole --onefile --upx-dir={} {}'.format(upxpath, exefile))
         self.execfile = os.path.join(self.worktemp, 'dist', self.execname)
 
         # Return to main directory
