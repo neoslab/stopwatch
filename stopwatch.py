@@ -23,16 +23,46 @@ class StopWatch(QWidget):
         """ Class initialization """
         super().__init__()
         self.displaylabel = QLabel("00:00:00:00")
-        self.displaylabel.setStyleSheet("font-size:20px;font-weight:bold;")
+        self.displaylabel.setStyleSheet("font-size:30px;font-weight:normal;color:#ffffff;")
         self.btn_start = QPushButton("Start")
         self.btn_start.setFixedSize(100, 35)
-        self.btn_start.setStyleSheet("font-size:13px;border:1px solid #787878;")
+        self.btn_start.setStyleSheet("""
+            QPushButton {
+                font-size:13px;
+                color:#ffffff;
+                background-color:#23262a;
+                border:1px solid #787878;
+            }
+            QPushButton:hover {
+                background-color:#3a3f45;
+            }
+        """)
         self.btn_stop = QPushButton("Stop")
         self.btn_stop.setFixedSize(100, 35)
-        self.btn_stop.setStyleSheet("font-size:13px;border:1px solid #787878;")
+        self.btn_stop.setStyleSheet("""
+            QPushButton {
+                font-size:13px;
+                color:#ffffff;
+                background-color:#23262a;
+                border:1px solid #787878;
+            }
+            QPushButton:hover {
+                background-color:#3a3f45;
+            }
+        """)
         self.btn_reset = QPushButton("Reset")
         self.btn_reset.setFixedSize(100, 35)
-        self.btn_reset.setStyleSheet("font-size:13px;border:1px solid #787878;")
+        self.btn_reset.setStyleSheet("""
+            QPushButton {
+                font-size:13px;
+                color:#ffffff;
+                background-color:#23262a;
+                border:1px solid #787878;
+            }
+            QPushButton:hover {
+                background-color:#3a3f45;
+            }
+        """)
         self.timer = QTimer()
         self.elapsed_time = 0
         self.running = False
@@ -44,11 +74,12 @@ class StopWatch(QWidget):
     def gui(self):
         """ Return the visual interface """
         self.setWindowTitle("StopWatch")
-        self.setGeometry(100, 100, 300, 150)
+        self.setFixedSize(350, 150)
+        self.setStyleSheet("background-color:#2a2e32;")
+
         layout = QVBoxLayout()
         self.displaylabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.displaylabel.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        self.displaylabel.setStyleSheet("font-size: 24px")  # Increase font size
         layout.addWidget(self.displaylabel)
         handlerlayout = QHBoxLayout()
         self.btn_start.clicked.connect(self.start)

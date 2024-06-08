@@ -80,8 +80,8 @@ def main():
     parser = ArgumentParser(description='Build a StopWatch executable')
     parser.add_argument('-o', '--output', required=True, help='executable name')
     args = parser.parse_args()
-    stopwatch = Builder(outputexe=args.output)
-    stopwatch.buildexec()
+    execgen = Builder(outputexe=args.output)
+    execgen.buildexec()
 
 
 # Callback
